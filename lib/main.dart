@@ -15,10 +15,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   AssetsAudioPlayer player = new AssetsAudioPlayer();
   bool play = false;
-  int element = 0;
+  static int element = 0;
   bool loopActive = false;
 
+
   List<Map<String, dynamic>> songDetais = [
+    {"image": 'b.jpg', "song": "12.opus"},
+    {"image": 'band.jpg', "song": "15.opus"},
+    {"image": '20.jpg', "song": "60.opus"},
     {"image": '15.jpg', "song": "1.mp3"},
     {"image": '7.jpg', "song": "2.mp3"},
     {"image": '9.jpg', "song": "3.mp3"},
@@ -27,8 +31,11 @@ class _MyAppState extends State<MyApp> {
     {"image": '9.jpg', "song": "9.opus"}
   ];
 
+
+
   @override
   Widget build(BuildContext context) {
+
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     return MaterialApp(
       home: Scaffold(
@@ -40,7 +47,6 @@ class _MyAppState extends State<MyApp> {
                 child: Container(
                   width: 300,
                   decoration: BoxDecoration(
-                    // color: Colors.amber,
                     image: DecorationImage(
                         image: AssetImage(
                           'images/${songDetais.elementAt(element)["image"]}',
@@ -57,22 +63,25 @@ class _MyAppState extends State<MyApp> {
                 height: 30,
               ),
 
-              Text('${songDetais.length}'),
-              Text('${songDetais.elementAt(element)["song"]}'),
-              Text('${element}'),
+              // Text('${songDetais.length}'),
+              // Text('${songDetais.length-1}'),
+              // Text('${songDetais.elementAt(element)["song"]}'),
+              // Text('${element}'),
 
               // Text('${play}'),
               Expanded(
                   flex: 4,
                   child: SingleChildScrollView(
                     child: Column(
-                      children: songDetais.map((e) => Song(e["song"], '10:30')).toList(),
+                      children: 
+                      songDetais
+                          .map((e) => Song(e["song"] ))
+                          .toList(),
                     ),
                   )),
               Expanded(
                   flex: 1,
                   child: Container(
-                    // color: Colors.blue,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
@@ -93,6 +102,7 @@ class _MyAppState extends State<MyApp> {
                                   iconSize: 40,
                                   // iconSize: 50,
                                   onPressed: () {
+                                    // player.previous();
                                     setState(() {
                                       if (element <= 0) {
                                         element = 0;
@@ -104,8 +114,7 @@ class _MyAppState extends State<MyApp> {
                                         player.open(
                                           Audio(
                                               // "music/${songs.elementAt(element)}"
-                                              'music/${songDetais.elementAt(element)["song"]}'
-                                              ),
+                                              'music/${songDetais.elementAt(element)["song"]}'),
                                         );
                                       }
                                     });
@@ -131,8 +140,7 @@ class _MyAppState extends State<MyApp> {
                                     } else {
                                       player.open(
                                         Audio(
-                                              'music/${songDetais.elementAt(element)["song"]}'
-                                            ),
+                                            'music/${songDetais.elementAt(element)["song"]}'),
                                       );
                                     }
                                   }),
@@ -141,8 +149,8 @@ class _MyAppState extends State<MyApp> {
                                   iconSize: 40,
                                   onPressed: () {
                                     setState(() {
-                                      if (element >= songDetais.length) {
-                                        element = songDetais.length;
+                                      if (element >= songDetais.length-1) {
+                                        element = songDetais.length-1;
                                       } else {
                                         play = false;
                                         player.pause();
@@ -150,8 +158,7 @@ class _MyAppState extends State<MyApp> {
                                         play = true;
                                         player.open(
                                           Audio(
-                                              'music/${songDetais.elementAt(element)["song"]}'
-                                              ),
+                                              'music/${songDetais.elementAt(element)["song"]}'),
                                         );
                                       }
                                     });
@@ -184,16 +191,15 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-Widget Song(name, duration) {
+Widget Song(name) {
   return Container(
     height: 50,
     margin: EdgeInsets.only(top: 5),
-    // color: Colors.blue[50],
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
+        Icon(Icons.volume_up, color:  1 == 1 ? Colors.blueAccent:Colors.grey,),
         Text('${name}'),
-        Text('${duration}'),
       ],
     ),
   );
