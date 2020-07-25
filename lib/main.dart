@@ -17,19 +17,14 @@ class _MyAppState extends State<MyApp> {
   bool play = false;
   int element = 0;
   bool loopActive = false;
-  List<String> songs = [
-    "5.opus",
-    "8.opus",
-    "9.opus",
-    "1.mp3",
-    "2.mp3",
-    "3.mp3",
-  ];
 
   List<Map<String, dynamic>> songDetais = [
-    { "image":'15.jpg', "song":"1.mp3"},
-    { "image":'7.jpg', "song":"1.mp3"},
-    { "image":'9.jpg', "song":"1.mp3"}
+    {"image": '15.jpg', "song": "1.mp3"},
+    {"image": '7.jpg', "song": "2.mp3"},
+    {"image": '9.jpg', "song": "3.mp3"},
+    {"image": '15.jpg', "song": "5.opus"},
+    {"image": '7.jpg', "song": "8.opus"},
+    {"image": '9.jpg', "song": "9.opus"}
   ];
 
   @override
@@ -48,7 +43,7 @@ class _MyAppState extends State<MyApp> {
                     // color: Colors.amber,
                     image: DecorationImage(
                         image: AssetImage(
-                          'images/15.jpg',
+                          'images/${songDetais.elementAt(element)["image"]}',
                         ),
                         fit: BoxFit.fill),
                     borderRadius: BorderRadius.only(
@@ -61,13 +56,17 @@ class _MyAppState extends State<MyApp> {
               SizedBox(
                 height: 30,
               ),
+
+              Text('${songDetais.length}'),
               Text('${songDetais.elementAt(element)["song"]}'),
+              Text('${element}'),
+
               // Text('${play}'),
               Expanded(
                   flex: 4,
                   child: SingleChildScrollView(
                     child: Column(
-                      children: songs.map((e) => Song(e, '10:30')).toList(),
+                      children: songDetais.map((e) => Song(e["song"], '10:30')).toList(),
                     ),
                   )),
               Expanded(
@@ -104,7 +103,9 @@ class _MyAppState extends State<MyApp> {
                                         play = true;
                                         player.open(
                                           Audio(
-                                              "music/${songs.elementAt(element)}"),
+                                              // "music/${songs.elementAt(element)}"
+                                              'music/${songDetais.elementAt(element)["song"]}'
+                                              ),
                                         );
                                       }
                                     });
@@ -120,7 +121,7 @@ class _MyAppState extends State<MyApp> {
                                   onPressed: () {
                                     setState(() {
                                       if (element <= 0 &&
-                                          element >= songs.length) {
+                                          element >= songDetais.length) {
                                       } else {
                                         play = !play;
                                       }
@@ -130,7 +131,8 @@ class _MyAppState extends State<MyApp> {
                                     } else {
                                       player.open(
                                         Audio(
-                                            "music/${songs.elementAt(element)}"),
+                                              'music/${songDetais.elementAt(element)["song"]}'
+                                            ),
                                       );
                                     }
                                   }),
@@ -139,8 +141,8 @@ class _MyAppState extends State<MyApp> {
                                   iconSize: 40,
                                   onPressed: () {
                                     setState(() {
-                                      if (element >= songs.length) {
-                                        element = songs.length;
+                                      if (element >= songDetais.length) {
+                                        element = songDetais.length;
                                       } else {
                                         play = false;
                                         player.pause();
@@ -148,7 +150,8 @@ class _MyAppState extends State<MyApp> {
                                         play = true;
                                         player.open(
                                           Audio(
-                                              "music/${songs.elementAt(element)}"),
+                                              'music/${songDetais.elementAt(element)["song"]}'
+                                              ),
                                         );
                                       }
                                     });
