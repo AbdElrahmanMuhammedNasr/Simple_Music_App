@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'package:flutter/services.dart';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
@@ -26,17 +26,17 @@ class _MyAppState extends State<MyApp> {
     "3.mp3",
   ];
 
-  List<Map<String, dynamic>> songDetais =[
-    {}
+  List<Map<String, dynamic>> songDetais = [
+    { "image":'15.jpg', "song":"1.mp3"},
+    { "image":'7.jpg', "song":"1.mp3"},
+    { "image":'9.jpg', "song":"1.mp3"}
   ];
-
-
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     return MaterialApp(
       home: Scaffold(
-
         body: Container(
           child: Column(
             children: <Widget>[
@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
               SizedBox(
                 height: 30,
               ),
-              // Text('${element}'),
+              Text('${songDetais.elementAt(element)["song"]}'),
               // Text('${play}'),
               Expanded(
                   flex: 4,
